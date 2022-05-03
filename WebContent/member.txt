@@ -1,0 +1,49 @@
+로그인 기능 ===> selectOne()
+
+회원가입 기능 ===> insertMember()
+
+회원정보 수정 ===> updateMember()
+
+회원정보 1개 가져오기 ===> selectOne()
+
+회원정보 전부 가져오기 ===> selectAll()
+
+회원탈퇴 ===> deleteMember()
+
+==> 이런기능들을 분리해서 service 패키지에 클래스를 만들어서 사용한다.
+MemberService ==> MemberDao 를 이용해서 기능들을 구현
+
+servlet
+MemberServlet.java
+처리해야할 요청 목록
+loginForm ===> 로그인 화면 보여주기
+login ===> 로그인 기능 요청
+		   MemberService.login() 호출 , 결과가 true이면 
+		   session 에 userid 속성 저장
+		   main 페이지로 redirect
+		   결과가 false이면 loginForm 요청을 보냄 (리다이렉트)
+logout ===> 로그아웃 기능 요청
+			session 에 저장된 userid 속성 삭제
+			loginForm 요청을 보냄(리다이렉트)
+main ===> 메인화면 보여주기
+		  (단, 세션에 사용자 정보가 있을때만 메인화면 보여주고,
+		  사용자 정보가 존재하지 않으면 loginForm 으로 리다이렉트)
+memberList ===> 화면에 회원목록을 보여주는 기능 요청
+				MemberService.getAllMembers() 메서드 이용해서 
+				회원 목록 가져오고 데이터 담아서 새로운 페이지로 이동
+modifyForm ===> 회원정보 수정화면을 보여주는 기능 요청
+				데이터베이스에서 현재 로그인된 사용자의 정보를 조회
+				해당 정보를 수정 화면으로 전달
+				수정화면에서 아이디, 가입날짜를 제외한 나머지 정보를 수정할수 있게
+modify ===> 수정 기능 요청
+			MemberService.modify()
+			
+joinForm ===> 회원가입화면 보여주는 기능 요청
+			  회원가입 페이지로 이동
+join ===> 회원가입 기능 요청
+		  MemberService.join()
+		  실패하면 다시 회원가입화면 으로 돌아가기 (리다이렉트)
+		  성공하면 로그인 페이지로 이동 (리다이렉트)
+
+
+
